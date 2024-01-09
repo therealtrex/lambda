@@ -96,7 +96,11 @@ def transformLogEvent(log_event,acct,arn,loggrp,logstrm,filterName):
     
     region_name=arn.split(':')[3]
     # note that the region_name is taken from the region for the Stream, this won't change if Cloudwatch from another account/region. Not used for this example function
-    if "CloudTrail" in loggrp:
+    # Debug
+    #print ('log group is:')
+    #print(loggrp)
+    
+    if "cloudtrail" in loggrp:
         sourcetype="aws:cloudtrail"
     elif "vpcflowlogs" in loggrp:
         sourcetype="aws:cloudwatchlogs:vpcflow"
@@ -105,7 +109,7 @@ def transformLogEvent(log_event,acct,arn,loggrp,logstrm,filterName):
     
     return_message = '{"time": ' + str(log_event['timestamp']) + ',"host": "' + arn  +'","source": "' + filterName +':' + loggrp + '"'
     #return_message = return_message + ',"sourcetype":"' + sourcetype + '","index": "cloudtrail-management-events-push-trex"'
-    return_message = return_message + ',"sourcetype":"' + sourcetype"'
+    return_message = return_message + ',"sourcetype":"' + sourcetype + '"'
     return_message = return_message + ',"event": ' + json.dumps(log_event['message']) + '}\n'
     
     # Print out the chosen sourcetype in CWL Lambda Logging. This will help with debug. 
