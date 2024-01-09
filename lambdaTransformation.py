@@ -104,7 +104,8 @@ def transformLogEvent(log_event,acct,arn,loggrp,logstrm,filterName):
         sourcetype="aws:firehose:json"
     
     return_message = '{"time": ' + str(log_event['timestamp']) + ',"host": "' + arn  +'","source": "' + filterName +':' + loggrp + '"'
-    return_message = return_message + ',"sourcetype":"' + sourcetype + '","index": "cloudtrail-management-events-push-trex"'
+    #return_message = return_message + ',"sourcetype":"' + sourcetype + '","index": "cloudtrail-management-events-push-trex"'
+    return_message = return_message + ',"sourcetype":"' + sourcetype"'
     return_message = return_message + ',"event": ' + json.dumps(log_event['message']) + '}\n'
     
     # Print out the chosen sourcetype in CWL Lambda Logging. This will help with debug. 
